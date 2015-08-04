@@ -42,6 +42,9 @@ NSInteger const refreshInteractionsCellTag = 555;
 - (void)surveyBecameAvailable:(NSNotification *)notification;
 - (void)unreadMessageCountChanged:(NSNotification *)notification;
 - (void)checkForProperConfiguration;
+
+@property (nonatomic, assign) BOOL shouldOverrideStrings;
+
 @end
 
 @implementation RootViewController
@@ -276,4 +279,16 @@ NSInteger const refreshInteractionsCellTag = 555;
 	[tags release], tags = nil;
 	[super dealloc];
 }
+
+#pragma mark - Custom properties
+- (void)setShouldOverrideStrings:(BOOL)shouldOverrideStrings
+{
+	if (_shouldOverrideStrings != shouldOverrideStrings)
+	{
+		_shouldOverrideStrings = shouldOverrideStrings;
+		NSBundle *bundle = shouldOverrideStrings ? [NSBundle mainBundle] : nil;
+		[ATConnect sharedConnection].alternativeBundleForLocalizedStrings = bundle;
+	}
+}
+
 @end

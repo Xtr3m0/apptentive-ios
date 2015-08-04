@@ -167,6 +167,7 @@ extern NSString *const ATIntegrationKeyParse;
 @property (nonatomic, retain) UIColor *tintColor;
 #endif
 
+@property (nonatomic, retain) NSBundle *alternativeBundleForLocalizedStrings;
 
 #if TARGET_OS_IPHONE
 

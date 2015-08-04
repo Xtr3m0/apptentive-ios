@@ -106,6 +106,7 @@ NSString *const ATConnectCustomDeviceDataChangedNotification = @"ATConnectCustom
 	[appID release], appID = nil;
 	[initialUserName release], initialUserName = nil;
 	[initialUserEmailAddress release], initialUserEmailAddress = nil;
+	[_alternativeBundleForLocalizedStrings release], _alternativeBundleForLocalizedStrings = nil;
 	[super dealloc];
 }
 
@@ -552,6 +553,16 @@ NSString *const ATConnectCustomDeviceDataChangedNotification = @"ATConnectCustom
 @end
 
 NSString *ATLocalizedString(NSString *key, NSString *comment) {
+	NSBundle *alternativeBundle = [ATConnect sharedConnection].alternativeBundleForLocalizedStrings;
+	if (alternativeBundle)
+	{
+		NSString *result = [alternativeBundle localizedStringForKey:key value:nil table:nil];
+		if (![result isEqualToString:key])
+		{
+			return result;
+		}
+	}
+	
 	static NSBundle *bundle = nil;
 	if (!bundle) {
 		bundle = [[ATConnect resourceBundle] retain];
